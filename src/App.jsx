@@ -1,7 +1,10 @@
 
+import { BrowserRouter } from 'react-router-dom'
 import './App.css'
-// import Home from './Pages/User/Home'
-import Land from './Pages/User/Land'
+import UserRoute from './Routes/User-Route/UserRoute'
+import CommonRoute from './Routes/CommonRoute'
+
+
 
 function App() {
   
@@ -9,8 +12,17 @@ function App() {
   return (
     <>
     {/* USER */}
+     
+    <BrowserRouter>
+      <UserRoute/>
+      <CommonRoute/>
+    </BrowserRouter>
+    
 
-     <Land/>
+    
+     
+     
+     
      
 
     </>
