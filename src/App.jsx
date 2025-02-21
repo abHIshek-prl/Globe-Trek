@@ -30,3 +30,9 @@ function App() {
 }
 
 export default App
+
+
+
+// register -> home
+// login -> chat
+// home -> start planning -> payment

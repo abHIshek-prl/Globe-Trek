@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
-import Servc from "../../assets/UserImg/service-bg.png"
+import Servc from "../../assets/UserImg/servis.png"
 
 function Service() {
   return (
@@ -13,10 +13,18 @@ function Service() {
         
         <div className="h-[89%] w-full  bg-cover bg-no-repeat" style={{ backgroundImage: `url(${Servc})` }}>
           <div className="h-full w-full bg-[#000000af] text-center flex flex-col justify-center items-center">
-            <p className="text-2xl font-semibold text-white">
+            <h1 className="text-4xl font-bold text-white">Seamless Travel, Unforgettable Memories <br/>
+              
+              <span className="text-[#dee649]">Plan</span>,
+              <span className="text-[#66c659]">Book</span>,
+              <span className="text-[#00d9ff]">Explore</span>!
+              </h1>
+              
+            <p></p><br />
+            <p className="text-xl font-semibold text-white">
               Discover tailored travel solutions that fit your needs.
             </p>
-            <p className="text-2xl font-semibold text-white">
+            <p className="text-xl font-semibold text-white">
               Plan and book effortlessly!
             </p>
           </div>
@@ -32,7 +40,7 @@ function Service() {
          
             <div className="p-6 text-center transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-black">
               <button>
-              <Link to='/plan'>
+              <Link to='/planning'>
               <div className="mb-3 text-5xl">🗺️</div>
               <h3 className="text-xl font-semibold text-gray-700">
                 Trip Planning
@@ -61,7 +69,7 @@ function Service() {
 
             <div className="p-6 text-center transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-black">
               <button>
-                <Link to='vehicle'>
+                <Link to='/vehicle'>
                 <div className="mb-3 text-5xl">🚗</div>
               <h3 className="text-xl font-semibold text-gray-700">
                 Vehicle Rentals
@@ -103,6 +111,7 @@ function Service() {
 
             <div className="p-6 text-center transition-all duration-300 bg-white shadow-lg rounded-2xl hover:shadow-black">
              <button>
+              <Link to='/advanture'>
              <div className="mb-3 text-5xl">⛰️</div>
               <h3 className="text-xl font-semibold text-gray-700">
                 Adventure Activities
@@ -110,6 +119,7 @@ function Service() {
               <p className="mt-2 text-gray-600">
                 Discover thrilling adventures worldwide.
               </p>
+              </Link>
              </button>
             </div>
           </div>
