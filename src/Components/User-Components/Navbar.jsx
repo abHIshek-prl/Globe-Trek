@@ -46,12 +46,12 @@ function Navbar() {
               {/* Dropdown Menu */}
               {isServiceOpen && (
                 <div className="absolute left-0 w-48 mt-2 bg-white border rounded-lg shadow-lg">
-                  <Link to='/trip-planning' className="block px-4 py-2 text-black hover:bg-gray-200">Trip Planning</Link>
-                  <Link to='/tour-packages' className="block px-4 py-2 text-black hover:bg-gray-200">Tour Packages</Link>
-                  <Link to='/vehicle-rentals' className="block px-4 py-2 text-black hover:bg-gray-200">Vehicle Rentals</Link>
-                  <Link to='/local-guides' className="block px-4 py-2 text-black hover:bg-gray-200">Local Guides</Link>
-                  <Link to='/resort-bookings' className="block px-4 py-2 text-black hover:bg-gray-200">Resort Bookings</Link>
-                  <Link to='/adventure-activities' className="block px-4 py-2 text-black hover:bg-gray-200">Adventure Activities</Link>
+                  <Link to='/planning' className="block px-4 py-2 text-black hover:bg-gray-200">Trip Planning</Link>
+                  <Link to='/package' className="block px-4 py-2 text-black hover:bg-gray-200">Tour Packages</Link>
+                  <Link to='/vehicle' className="block px-4 py-2 text-black hover:bg-gray-200">Vehicle Rentals</Link>
+                  <Link to='/guid' className="block px-4 py-2 text-black hover:bg-gray-200">Local Guides</Link>
+                  <Link to='/resort' className="block px-4 py-2 text-black hover:bg-gray-200">Resort Bookings</Link>
+                  <Link to='/advanture' className="block px-4 py-2 text-black hover:bg-gray-200">Adventure Activities</Link>
                 </div>
               )}
             </div>

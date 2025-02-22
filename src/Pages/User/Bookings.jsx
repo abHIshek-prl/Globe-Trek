@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-
-
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
 
@@ -21,35 +19,40 @@ function Bookings() {
 
   return (
     <div className="min-h-screen bg-gray-100">
+      <Navbar />
       
-<Navbar/>
-      <div className="container p-6 mx-auto">
+      <div className="container px-4 py-6 mx-auto">
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">My Bookings</h2>
 
+        {/* Responsive Table Wrapper */}
         <div className="overflow-x-auto">
-          <table className="min-w-full overflow-hidden bg-white rounded-lg shadow-md">
+          <table className="w-full overflow-hidden bg-white rounded-lg shadow-md min-w-max">
             <thead className="text-white bg-blue-600">
-              <tr>
-                <th className="px-6 py-3 text-left">Booking ID</th>
-                <th className="px-6 py-3 text-left">Type</th>
-                <th className="px-6 py-3 text-left">Name</th>
-                <th className="px-6 py-3 text-left">Date</th>
-                <th className="px-6 py-3 text-left">Status</th>
+              <tr className="text-left">
+                <th className="px-4 py-3">Booking ID</th>
+                <th className="px-4 py-3">Type</th>
+                <th className="px-4 py-3">Name</th>
+                <th className="px-4 py-3">Date</th>
+                <th className="px-4 py-3">Status</th>
               </tr>
             </thead>
             <tbody>
               {bookings.length > 0 ? (
                 bookings.map((booking) => (
                   <tr key={booking.id} className="border-b hover:bg-gray-100">
-                    <td className="px-6 py-3">{booking.id}</td>
-                    <td className="px-6 py-3">{booking.type}</td>
-                    <td className="px-6 py-3">{booking.name}</td>
-                    <td className="px-6 py-3">{booking.date}</td>
-                    <td className={`py-3 px-6 font-semibold ${
-                      booking.status === "Confirmed" ? "text-green-600" :
-                      booking.status === "Pending" ? "text-yellow-600" :
-                      "text-red-600"
-                    }`}>{booking.status}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">{booking.id}</td>
+                    <td className="px-4 py-3">{booking.type}</td>
+                    <td className="px-4 py-3">{booking.name}</td>
+                    <td className="px-4 py-3 whitespace-nowrap">{booking.date}</td>
+                    <td
+                      className={`px-4 py-3 font-semibold ${
+                        booking.status === "Confirmed" ? "text-green-600" :
+                        booking.status === "Pending" ? "text-yellow-600" :
+                        "text-red-600"
+                      }`}
+                    >
+                      {booking.status}
+                    </td>
                   </tr>
                 ))
               ) : (
