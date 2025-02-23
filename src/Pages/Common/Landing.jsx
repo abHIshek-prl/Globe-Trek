@@ -15,7 +15,7 @@ function Landing() {
           </div>
 
           <div className="flex items-center justify-center w-full h-full">
-            <div className="w-[90%] md:w-[60%] flex flex-col justify-center text-center md:text-left">
+            <div className="w-[90%] md:w-[60%] flex flex-col justify-center text-left md:text-left">
               <span>
                 <p className="text-lg md:text-4xl font-semibold text-[#77f0f0]">It's Time To</p>
                 <p className="font-bold text-[#24ba8d] text-4xl md:text-8xl">EXPLORE</p>

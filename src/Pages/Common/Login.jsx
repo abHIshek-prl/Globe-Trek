@@ -36,7 +36,7 @@ function Login() {
                             type="submit"
                             className="w-full py-2 mt-2 font-medium text-white bg-green-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                         >
-                            <Link to='/chat'>
+                            <Link to='/home'>
                                 Login
                             </Link>
                         </button>

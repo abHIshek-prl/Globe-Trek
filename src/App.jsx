@@ -34,5 +34,5 @@ export default App
 
 
 // register -> home
-// login -> chat
+// login -> home
 // home -> start planning -> payment
