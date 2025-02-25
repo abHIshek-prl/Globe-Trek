@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
 
@@ -7,7 +8,7 @@ function Advanture() {
     const [selectedAdventure, setSelectedAdventure] = useState(null);
     const [filter, setFilter] = useState("All");
 
-    const adventures = [
+   const adventures = [
         // India Adventures
         {
             id: 1,
@@ -116,14 +117,16 @@ function Advanture() {
                         "url('https://himalayaguidenepal.com/wp-content/uploads/2023/12/Tourism-activities-in-nepal.jpg')",
                 }}
             >
-                {/* Dark Overlay */}
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div>
-
-                {/* Content */}
-                <div className="relative z-10">
+                <motion.div 
+                    initial={{ opacity: 0, y: 50 }} 
+                    animate={{ opacity: 1, y: 0 }} 
+                    transition={{ duration: 1 }}
+                    className="relative z-10"
+                >
                     <h1 className="text-4xl font-bold md:text-5xl">Thrilling Adventures Await You!</h1>
                     <p className="mt-4 text-lg md:text-xl">Choose your adventure and create unforgettable memories.</p>
-                </div>
+                </motion.div>
             </section>
 
             {/* Filters */}
@@ -131,9 +134,7 @@ function Advanture() {
                 {["All", "Easy", "Medium", "Hard"].map((level) => (
                     <button
                         key={level}
-                        className={`px-4 py-2 text-white rounded ${
-                            filter === level ? "bg-blue-600" : "bg-gray-500 hover:bg-gray-700"
-                        }`}
+                        className={`px-4 py-2 text-white rounded ${filter === level ? "bg-blue-600" : "bg-gray-500 hover:bg-gray-700"}`}
                         onClick={() => setFilter(level)}
                     >
                         {level}
@@ -141,17 +142,32 @@ function Advanture() {
                 ))}
             </div>
 
-            {/* Adventure Cards */}
-            <div className="min-h-screen p-6 bg-gray-100">
+            {/* Adventure Cards with Animation */}
+            <motion.div 
+                className="min-h-screen p-6 bg-gray-100"
+                initial="hidden"
+                animate="visible"
+                variants={{
+                    hidden: { opacity: 0 },
+                    visible: {
+                        opacity: 1,
+                        transition: { staggerChildren: 0.2 }
+                    }
+                }}
+            >
                 <div className="grid max-w-5xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 md:grid-cols-3">
                     {filteredAdventures.map((adventure) => (
-                        <div key={adventure.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
+                        <motion.div 
+                            key={adventure.id} 
+                            className="overflow-hidden bg-white rounded-lg shadow-lg"
+                            initial={{ opacity: 0, y: 30 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5 }}
+                        >
                             <img src={adventure.image} alt={adventure.name} className="object-cover w-full h-48" />
                             <div className="p-4">
                                 <h3 className="text-xl font-bold">{adventure.name}</h3>
-                                <p className="text-gray-600">
-                                    {adventure.location} | {adventure.difficulty} Level
-                                </p>
+                                <p className="text-gray-600">{adventure.location} | {adventure.difficulty} Level</p>
                                 <p className="font-semibold text-blue-600">${adventure.price}/person</p>
                                 <button
                                     className="w-full px-4 py-2 mt-3 text-white bg-blue-500 rounded hover:bg-blue-600"
@@ -160,50 +176,10 @@ function Advanture() {
                                     View Details
                                 </button>
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                 </div>
-            </div>
-
-            {/* Modal for Adventure Details */}
-            {selectedAdventure && (
-                <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
-                    <div className="relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-                        <button
-                            className="absolute text-xl text-red-500 top-2 right-2"
-                            onClick={() => setSelectedAdventure(null)}
-                        >
-                            ✕
-                        </button>
-                        <img
-                            src={selectedAdventure.image}
-                            alt={selectedAdventure.name}
-                            className="object-cover w-full h-40 rounded"
-                        />
-                        <h3 className="mt-4 text-2xl font-bold">{selectedAdventure.name}</h3>
-                        <p className="text-gray-600">Location: {selectedAdventure.location}</p>
-                        <p className="text-gray-600">Difficulty: {selectedAdventure.difficulty}</p>
-                        <p className="mt-2 font-bold text-blue-600">${selectedAdventure.price}/person</p>
-
-                        <div className="flex gap-4 mt-4">
-                            <button
-                                className="w-full px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600"
-                                onClick={() => setSelectedAdventure(null)}
-                            >
-                                Close
-                            </button>
-                            <Link to={`/booking?adventureId=${selectedAdventure.id}`} className="w-full">
-                                <button className="w-full px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">
-                                    <Link to='/pay'>Book Now</Link>
-                                </button>
-                            </Link>
-                            <button className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
-                                <Link to="/chat">Chat</Link>
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
+            </motion.div>
 
             <Footer />
         </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
 
@@ -94,25 +95,49 @@ function Packages() {
     <>
       <Navbar />
 
-      <section
+      <motion.section
         className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
-        style={{ backgroundImage: `url('https://s3.india.com/wp-content/uploads/2024/06/List-of-8-Famous-Beaches-Around-Goa.jpg##image/jpg')` }}
+        style={{ backgroundImage: `url('https://s3.india.com/wp-content/uploads/2024/06/List-of-8-Famous-Beaches-Around-Goa.jpg')` }}
+        initial={{ opacity: 0, y: -50 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8 }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
         <div className="relative z-10">
-          <h1 className="text-3xl font-bold md:text-5xl">Discover Best Travel Packages</h1>
-          <p className="mt-4 text-lg md:text-xl">
+          <motion.h1 className="text-3xl font-bold md:text-5xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.3, duration: 1 }}>
+            Discover Best Travel Packages
+          </motion.h1>
+          <motion.p className="mt-4 text-lg md:text-xl"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.5, duration: 1 }}>
             Explore breathtaking destinations, cultural heritage, and adventure-packed tours.
-          </p>
+          </motion.p>
         </div>
-      </section>
+      </motion.section>
 
       <div className="min-h-screen p-6 bg-gray-100">
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Popular Travel Packages</h2>
 
-        <div className="grid max-w-6xl gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3">
+        <motion.div
+          className="grid max-w-6xl gap-6 mx-auto sm:grid-cols-2 lg:grid-cols-3"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true }}
+          variants={{
+            hidden: { opacity: 0, y: 50 },
+            visible: { opacity: 1, y: 0, transition: { staggerChildren: 0.2 } }
+          }}
+        >
           {packages.map((pkg) => (
-            <div key={pkg.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
+            <motion.div
+              key={pkg.id}
+              className="overflow-hidden bg-white rounded-lg shadow-lg"
+              variants={{ hidden: { opacity: 0, y: 50 }, visible: { opacity: 1, y: 0 } }}
+            >
               <img src={pkg.image} alt={pkg.name} className="object-cover w-full h-48" />
               <div className="p-4">
                 <h3 className="text-xl font-bold">{pkg.name}</h3>
@@ -125,14 +150,24 @@ function Packages() {
                   View Details
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
 
       {selectedPackage && (
-        <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
+        <motion.div
+          className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+        >
+          <motion.div
+            className="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg"
+            initial={{ scale: 0.8 }}
+            animate={{ scale: 1 }}
+            transition={{ type: "spring", stiffness: 120 }}
+          >
             <button
               className="absolute text-2xl text-red-500 top-2 right-2 hover:text-red-700"
               onClick={() => setSelectedPackage(null)}
@@ -167,8 +202,8 @@ function Packages() {
                 </button>
               </Link>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       )}
 
       <Footer />
@@ -177,3 +212,5 @@ function Packages() {
 }
 
 export default Packages;
+
+

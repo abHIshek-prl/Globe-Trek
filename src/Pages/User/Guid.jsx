@@ -1,10 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
 
 function Guide() {
     const [selectedGuide, setSelectedGuide] = useState(null);
+    const [showAnimation, setShowAnimation] = useState(false);
+
+    useEffect(() => {
+        if (!localStorage.getItem("guideAnimationShown")) {
+            setShowAnimation(true);
+            localStorage.setItem("guideAnimationShown", "true");
+        }
+    }, []);
 
     const guides = [
         // 🌍 International Guides
@@ -58,7 +67,7 @@ function Guide() {
             description: "Expert in Rome’s ancient history and architecture.",
             image: "https://img.freepik.com/premium-vector/male-avatar-icon-unknown-anonymous-person-default-avatar-profile-icon-social-media-user-business-man-man-profile-silhouette-isolated-white-background-vector-illustration_735449-122.jpg",
         },
-
+    
         // 🇮🇳 Indian Guides
         {
             id: 6,
@@ -149,103 +158,116 @@ function Guide() {
             price: 75,
             description: "Spiritual and yoga tour guide in Rishikesh.",
             image: "https://img.freepik.com/premium-vector/male-avatar-icon-unknown-anonymous-person-default-avatar-profile-icon-social-media-user-business-man-man-profile-silhouette-isolated-white-background-vector-illustration_735449-122.jpg",
-        },
-    ];
+        },]
 
     return (
-      <>
-          <Navbar />
+        <>
+            <Navbar />
 
-          {/* Hero Section */}
-          <section
-              className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
-              style={{
-                  backgroundImage: `url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJgiv8vHgbbH3jamqV3sxm20kvpR-4IATDMA&s)`,
-                  backgroundPosition: "center",
-              }}
-          >
-              <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-              <div className="relative z-10">
-                  <h1 className="text-3xl font-bold md:text-5xl">
-                      Meet Expert Travel Guides for Your Next Adventure
-                  </h1>
-                  <p className="mt-4 text-lg md:text-xl">
-                      Find the perfect travel plan, tour packages, and vehicles tailored just for you.
-                  </p>
-              </div>
-          </section>
+            {/* Hero Section with Animation */}
+            <motion.section
+                className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
+                style={{ backgroundImage: `url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJgiv8vHgbbH3jamqV3sxm20kvpR-4IATDMA&s)`, backgroundPosition: "center" }}
+                initial={{ opacity: 0, y: -50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1, ease: "easeOut" }}
+            >
+                <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+                <div className="relative z-10">
+                    <motion.h1
+                        className="text-3xl font-bold md:text-5xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2, delay: 0.3 }}
+                    >
+                        Meet Expert Travel Guides for Your Next Adventure
+                    </motion.h1>
+                    <motion.p
+                        className="mt-4 text-lg md:text-xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2, delay: 0.5 }}
+                    >
+                        Find the perfect travel plan, tour packages, and vehicles tailored just for you.
+                    </motion.p>
+                </div>
+            </motion.section>
 
-          {/* Guide Cards */}
-          <div className="min-h-screen p-6 bg-gray-100">
-              <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Travel Guides</h2>
+            {/* Guide Cards Section */}
+            <div className="min-h-screen p-6 bg-gray-100">
+                <motion.h2
+                    className="mb-6 text-3xl font-bold text-center text-blue-600"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1, delay: 0.3 }}
+                >
+                    Travel Guides
+                </motion.h2>
+                <motion.div
+                    className="grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                >
+                    {guides.map((guide, index) => (
+                        <motion.div
+                            key={guide.id}
+                            className="overflow-hidden bg-white rounded-lg shadow-lg"
+                            initial={{ opacity: 0, y: 50 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.2 }}
+                        >
+                            <img src={guide.image} alt={guide.name} className="object-cover w-full h-48" />
+                            <div className="p-4">
+                                <h3 className="text-xl font-bold">{guide.name}</h3>
+                                <p className="text-gray-600">{guide.location} | {guide.experience}</p>
+                                <p className="text-gray-600">Languages: {guide.languages}</p>
+                                <p className="font-semibold text-blue-600">${guide.price}/day</p>
+                                <button className="w-full px-4 py-2 mt-3 text-white bg-blue-500 rounded hover:bg-blue-600" onClick={() => setSelectedGuide(guide)}>View Details</button>
+                            </div>
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </div>
 
-              <div className="grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-                  {guides.map((guide) => (
-                      <div key={guide.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
-                          <img src={guide.image} alt={guide.name} className="object-cover w-full h-48" />
-                          <div className="p-4">
-                              <h3 className="text-xl font-bold">{guide.name}</h3>
-                              <p className="text-gray-600">{guide.location} | {guide.experience}</p>
-                              <p className="text-gray-600">Languages: {guide.languages}</p>
-                              <p className="font-semibold text-blue-600">${guide.price}/day</p>
-                              <button
-                                  className="w-full px-4 py-2 mt-3 text-white bg-blue-500 rounded hover:bg-blue-600"
-                                  onClick={() => setSelectedGuide(guide)}
-                              >
-                                  View Details
-                              </button>
-                          </div>
-                      </div>
-                  ))}
-              </div>
-          </div>
+            {/* Modal with Animation */}
+            {selectedGuide && (
+                <motion.div
+                    className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    exit={{ opacity: 0 }}
+                    onClick={() => setSelectedGuide(null)}
+                >
+                    <motion.div
+                        className="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg"
+                        initial={{ scale: 0.8, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        exit={{ scale: 0.8, opacity: 0 }}
+                        transition={{ duration: 0.3 }}
+                        onClick={(e) => e.stopPropagation()}
+                    >
+                        <button className="absolute text-gray-600 top-2 right-2 hover:text-red-500" onClick={() => setSelectedGuide(null)}>✖</button>
+                        <img src={selectedGuide.image} alt={selectedGuide.name} className="w-24 h-24 mx-auto rounded-full" />
+                        <h3 className="mt-4 text-2xl font-bold text-center">{selectedGuide.name}</h3>
+                        <p className="text-center text-gray-600">{selectedGuide.location}</p>
+                        <p className="mt-2 text-gray-700">{selectedGuide.description}</p>
+                        <p className="mt-2 text-gray-600"><strong>Experience:</strong> {selectedGuide.experience}</p>
+                        <p className="text-gray-600"><strong>Languages:</strong> {selectedGuide.languages}</p>
+                        <p className="mt-2 text-lg font-semibold text-blue-600">Price: ${selectedGuide.price}/day</p>
 
-          {/* Modal for Guide Details */}
-          {selectedGuide && (
-              <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
-                  <div className="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
-                      <button
-                          className="absolute text-gray-600 top-2 right-2 hover:text-red-500"
-                          onClick={() => setSelectedGuide(null)}
-                      >
-                          ✖
-                      </button>
-                      <img src={selectedGuide.image} alt={selectedGuide.name} className="w-24 h-24 mx-auto rounded-full" />
-                      <h3 className="mt-4 text-2xl font-bold text-center">{selectedGuide.name}</h3>
-                      <p className="text-center text-gray-600">{selectedGuide.location}</p>
-                      <p className="mt-2 text-gray-700">{selectedGuide.description}</p>
-                      <p className="mt-2 text-gray-600"><strong>Experience:</strong> {selectedGuide.experience}</p>
-                      <p className="text-gray-600"><strong>Languages:</strong> {selectedGuide.languages}</p>
-                      <p className="mt-2 text-lg font-semibold text-blue-600">Price: ${selectedGuide.price}/day</p>
+                        <div className="flex justify-center mt-4 space-x-4">
+                            <button className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600" onClick={() => setSelectedGuide(null)}>Close</button>
+                            <Link to='/pay' className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600">Book Now</Link>
+                            <Link to='/chat' className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Chat</Link>
+                        </div>
+                    </motion.div>
+                </motion.div>
+            )}
 
-                      {/* Buttons */}
-                      <div className="flex justify-center mt-4 space-x-4">
-                          <button
-                              className="px-4 py-2 text-white bg-gray-500 rounded hover:bg-gray-600"
-                              onClick={() => setSelectedGuide(null)}
-                          >
-                              Close
-                          </button>
-                          <button
-                              className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"
-                             
-                          >
-                              <Link to='/pay'>Book Now</Link>
-                          </button>
-                          <button
-                              className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                              
-                          >
-                              <Link to='/chat'>Chat</Link>
-                          </button>
-                      </div>
-                  </div>
-              </div>
-          )}
-
-          <Footer />
-      </>
-  );
+            <Footer />
+        </>
+    );
 }
 
 export default Guide;

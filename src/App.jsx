@@ -3,6 +3,7 @@ import { BrowserRouter } from 'react-router-dom'
 import './App.css'
 import UserRoute from './Routes/User-Route/UserRoute'
 import CommonRoute from './Routes/CommonRoute'
+import AgencyRoute from './Routes/Agency-Route/AgencyRoute'
 
 
 
@@ -16,6 +17,7 @@ function App() {
     <BrowserRouter>
       <UserRoute/>
       <CommonRoute/>
+      <AgencyRoute/>
     </BrowserRouter>
     
 

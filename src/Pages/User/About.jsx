@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import Navbar from '../../Components/User-Components/Navbar';
 import Footer from '../../Components/User-Components/Footer';
 
 function About() {
   const [openIndex, setOpenIndex] = useState(null);
+  const [isVisible, setIsVisible] = useState(false);
 
   // FAQ Data
   const faqs = [
@@ -23,16 +25,35 @@ function About() {
     setOpenIndex(openIndex === index ? null : index);
   };
 
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollY = window.scrollY;
+      setIsVisible(scrollY > 300); // Show FAQ section when scrolled down
+    };
+
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   return (
     <div className="bg-gray-100">
       <Navbar />
 
       {/* About Section */}
       <div className="flex items-center justify-center min-h-screen p-10">
-        <div className="flex flex-col items-center w-full max-w-5xl gap-8 p-6 bg-white shadow-lg sm:p-8 rounded-xl md:flex-row">
-          
+        <motion.div 
+          initial={{ opacity: 0, y: 50 }} 
+          animate={{ opacity: 1, y: 0 }} 
+          transition={{ duration: 1 }} 
+          className="flex flex-col items-center w-full max-w-5xl gap-8 p-6 bg-white shadow-lg sm:p-8 rounded-xl md:flex-row"
+        >
           {/* Text Section */}
-          <div className="text-center md:w-1/2 md:text-left">
+          <motion.div 
+            initial={{ opacity: 0, x: -50 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 1, delay: 0.3 }} 
+            className="text-center md:w-1/2 md:text-left"
+          >
             <h2 className="mb-4 text-3xl font-bold text-black">
               <span className="text-black">ABOUT </span>
               <span className="text-blue-600">US</span>
@@ -46,26 +67,42 @@ function About() {
               <br /><br />
               Whether you're a solo traveler, a family, or a travel agency, our <span className="font-semibold text-blue-600">role-based features</span> provide the perfect tools to make every journey smooth and memorable. <span className="font-semibold">Let’s make your dream trip a reality! 🌍✨🚀</span>
             </p>
-          </div>
+          </motion.div>
 
           {/* Image Section */}
-          <div className="flex justify-center md:w-1/2">
+          <motion.div 
+            initial={{ opacity: 0, x: 50 }} 
+            animate={{ opacity: 1, x: 0 }} 
+            transition={{ duration: 1, delay: 0.6 }} 
+            className="flex justify-center md:w-1/2"
+          >
             <img 
               src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQtrnw39Iq7Jw4oIEXhw9BFU_cVHbbLSVOh4wQhUB5MYccChubSA_k5F5kqEDmzwa-EKj8&usqp=CAU" 
               alt="Travel Adventure" 
               className="w-full max-w-xs shadow-lg sm:max-w-sm rounded-xl"
             />
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
 
       {/* FAQs Section */}
-      <div className="max-w-5xl p-6 mx-auto mb-10 bg-white shadow-lg rounded-xl">
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }} 
+        animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} 
+        transition={{ duration: 1 }} 
+        className="max-w-5xl p-6 mx-auto mb-10 bg-white shadow-lg rounded-xl"
+      >
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Frequently Asked Questions</h2>
 
         {/* Loop through FAQs */}
         {faqs.map((faq, index) => (
-          <div key={index} className="border-b border-gray-300">
+          <motion.div 
+            key={index} 
+            initial={{ opacity: 0, y: 30 }} 
+            animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }} 
+            transition={{ duration: 0.5, delay: index * 0.1 }} 
+            className="border-b border-gray-300"
+          >
             <button 
               onClick={() => toggleFAQ(index)}
               className="flex items-center justify-between w-full py-4 text-lg font-semibold text-left text-gray-900 hover:text-blue-600 focus:outline-none"
@@ -76,9 +113,9 @@ function About() {
             {openIndex === index && (
               <p className="px-4 pb-4 text-gray-700">{faq.answer}</p>
             )}
-          </div>
+          </motion.div>
         ))}
-      </div>
+      </motion.div>
 
       <Footer />
     </div>

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import Resrt from "../../assets/UserImg/resrt.png";
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
@@ -7,7 +8,7 @@ import Footer from "../../Components/User-Components/Footer";
 function Resort() {
     const [selectedResort, setSelectedResort] = useState(null);
 
-    const resorts = [
+   const resorts = [
         {
             id: 1,
             name: "Ocean View Resort",
@@ -101,99 +102,127 @@ function Resort() {
     ];
 
     return (
-      <>
-          <Navbar />
+        <>
+            <Navbar />
 
-          <section
-              className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
-              style={{ backgroundImage: `url(${Resrt})` }}
-          >
-              <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-              <div className="relative z-10">
-                  <h1 className="text-3xl font-bold md:text-5xl">Luxury Resorts & Unforgettable Stays!</h1>
-                  <p className="mt-4 text-lg md:text-xl">
-                      Find the perfect travel plan, tour packages, and vehicles tailored just for you.
-                  </p>
-              </div>
-          </section>
+            <motion.section
+                className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
+                style={{ backgroundImage: `url(${Resrt})` }}
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 1 }}
+            >
+                <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+                <motion.div className="relative z-10">
+                    <motion.h1 
+                        className="text-3xl font-bold md:text-5xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.2 }}
+                    >
+                        Luxury Resorts & Unforgettable Stays!
+                    </motion.h1>
+                    <motion.p 
+                        className="mt-4 text-lg md:text-xl"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 1.5 }}
+                    >
+                        Find the perfect travel plan, tour packages, and vehicles tailored just for you.
+                    </motion.p>
+                </motion.div>
+            </motion.section>
 
-          <div className="min-h-screen p-6 bg-gray-100">
-              <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Discover Your Perfect Getaway –</h2>
+            <div className="min-h-screen p-6 bg-gray-100">
+                <motion.h2 
+                    className="mb-6 text-3xl font-bold text-center text-blue-600"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1 }}
+                >
+                    Discover Your Perfect Getaway –
+                </motion.h2>
 
-              <div className="grid max-w-5xl grid-cols-1 gap-6 mx-auto md:grid-cols-3 sm:grid-cols-2">
-                  {resorts.map((resort) => (
-                      <div key={resort.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
-                          <img src={resort.image} alt={resort.name} className="object-cover w-full h-48" />
-                          <div className="p-4">
-                              <h3 className="text-xl font-bold">{resort.name}</h3>
-                              <p className="text-gray-600">{resort.location}</p>
-                              <p className="font-semibold text-blue-600">${resort.price}/night</p>
-                              <button
-                                  className="w-full px-4 py-2 mt-3 text-white bg-blue-500 rounded"
-                                  onClick={() => setSelectedResort(resort)}
-                              >
-                                  View Details
-                              </button>
-                          </div>
-                      </div>
-                  ))}
-              </div>
-          </div>
+                <motion.div 
+                    className="grid max-w-5xl grid-cols-1 gap-6 mx-auto md:grid-cols-3 sm:grid-cols-2"
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 1.2, staggerChildren: 0.2 }}
+                >
+                    {resorts.map((resort) => (
+                        <motion.div 
+                            key={resort.id} 
+                            className="overflow-hidden bg-white rounded-lg shadow-lg"
+                            whileHover={{ scale: 1.05 }}
+                        >
+                            <img src={resort.image} alt={resort.name} className="object-cover w-full h-48" />
+                            <div className="p-4">
+                                <h3 className="text-xl font-bold">{resort.name}</h3>
+                                <p className="text-gray-600">{resort.location}</p>
+                                <p className="font-semibold text-blue-600">${resort.price}/night</p>
+                                <button
+                                    className="w-full px-4 py-2 mt-3 text-white bg-blue-500 rounded"
+                                    onClick={() => setSelectedResort(resort)}
+                                >
+                                    View Details
+                                </button>
+                            </div>
+                        </motion.div>
+                    ))}
+                </motion.div>
+            </div>
 
-          {/* Resort Details Modal */}
-          {selectedResort && (
-              <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
-                  <div className="relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-                      <button
-                          className="absolute text-xl text-red-500 top-2 right-2"
-                          onClick={() => setSelectedResort(null)}
-                      >
-                          ✕
-                      </button>
-                      <img
-                          src={selectedResort.image}
-                          alt={selectedResort.name}
-                          className="object-cover w-full h-40 rounded"
-                      />
-                      <h3 className="mt-4 text-2xl font-bold">{selectedResort.name}</h3>
-                      <p className="text-gray-600">{selectedResort.location}</p>
-                      <p className="mt-2">{selectedResort.description}</p>
-                      <p className="mt-2 font-bold text-blue-600">${selectedResort.price}/night</p>
-
-                      <h4 className="mt-3 font-semibold">Activities:</h4>
-                      <ul className="ml-4 list-disc">
-                          {selectedResort.activities.map((activity, index) => (
-                              <li key={index} className="text-gray-700">
-                                  {activity}
-                              </li>
-                          ))}
-                      </ul>
-
-                      <div className="flex justify-between gap-2 mt-4">
-                      <button
-                            className="w-full px-4 py-2 text-white bg-gray-600 rounded hover:bg-gray-700"
+            {selectedResort && (
+                <motion.div 
+                    className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm"
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3 }}
+                >
+                    <div className="relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+                        <button
+                            className="absolute text-xl text-red-500 top-2 right-2"
                             onClick={() => setSelectedResort(null)}
                         >
-                            Close
+                            ✕
                         </button>
-                        <button className="w-full px-4 py-2 text-white bg-green-600 rounded hover:bg-green-700">
-                            <Link to='/pay'>Book Now</Link>
-                        </button>
-                        <button
-                            className="w-full px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
-                            
-                        >
-                            <Link to='/chat'>Chat</Link>
-                        </button>
-                        
-</div>
-                  </div>
-              </div>
-          )}
+                        <img
+                            src={selectedResort.image}
+                            alt={selectedResort.name}
+                            className="object-cover w-full h-40 rounded"
+                        />
+                        <h3 className="mt-4 text-2xl font-bold">{selectedResort.name}</h3>
+                        <p className="text-gray-600">{selectedResort.location}</p>
+                        <p className="mt-2">{selectedResort.description}</p>
+                        <p className="mt-2 font-bold text-blue-600">${selectedResort.price}/night</p>
 
-          <Footer />
-      </>
-  );
+                        <h4 className="mt-3 font-semibold">Activities:</h4>
+                        <ul className="ml-4 list-disc">
+                            {selectedResort.activities.map((activity, index) => (
+                                <li key={index} className="text-gray-700">
+                                    {activity}
+                                </li>
+                            ))}
+                        </ul>
+
+                        <div className="flex justify-between gap-2 mt-4">
+                            <button className="w-full px-4 py-2 text-white bg-gray-600 rounded" onClick={() => setSelectedResort(null)}>
+                                Close
+                            </button>
+                            <button className="w-full px-4 py-2 text-white bg-green-600 rounded">
+                                <Link to='/pay'>Book Now</Link>
+                            </button>
+                            <button className="w-full px-4 py-2 text-white bg-blue-500 rounded">
+                                <Link to='/chat'>Chat</Link>
+                            </button>
+                        </div>
+                    </div>
+                </motion.div>
+            )}
+
+            <Footer />
+        </>
+    );
 }
 
 export default Resort;

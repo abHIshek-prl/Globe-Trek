@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import { motion, AnimatePresence } from "framer-motion"; 
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
 
@@ -25,8 +26,12 @@ function Vehicle() {
     <>
       <Navbar />
 
-      <section 
-        className="relative flex flex-col items-center justify-center px-6 py-20 text-center text-white bg-no-repeat bg-cover" 
+      {/* Hero Section */}
+      <motion.section
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 1 }}
+        className="relative flex flex-col items-center justify-center px-6 py-20 text-center text-white bg-no-repeat bg-cover"
         style={{ backgroundImage: `url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSLeG_SyL3D4VRrTdN8rTMstzHWNgakDOp8WQ&s')` }}
       >
         <div className="absolute inset-0 bg-black bg-opacity-50"></div>
@@ -34,14 +39,22 @@ function Vehicle() {
           <h1 className="text-3xl font-bold md:text-5xl">Find the Perfect Ride for Your Journey</h1>
           <p className="mt-4 text-lg md:text-xl">Find the perfect travel plan, tour packages, and vehicles tailored just for you.</p>
         </div>
-      </section>
+      </motion.section>
 
+      {/* Vehicle Listings */}
       <div className="min-h-screen p-6 bg-gray-100">
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Vehicle Rentals</h2>
 
         <div className="grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-          {vehicles.map((vehicle) => (
-            <div key={vehicle.id} className="overflow-hidden bg-white rounded-lg shadow-lg">
+          {vehicles.map((vehicle, index) => (
+            <motion.div
+              key={vehicle.id}
+              className="overflow-hidden bg-white rounded-lg shadow-lg"
+              initial={{ opacity: 0, y: 30 }} // Start position
+              whileInView={{ opacity: 1, y: 0 }} // Animate when in view
+              transition={{ duration: 0.2, delay: index * 0.2 }} // Delay each card
+              viewport={{ once: true, amount: 0.2 }} // Ensures it runs only once
+            >
               <img src={vehicle.image} alt={vehicle.name} className="object-cover w-full h-48" />
               <div className="p-4">
                 <h3 className="text-xl font-bold">{vehicle.name}</h3>
@@ -55,47 +68,56 @@ function Vehicle() {
                   View Details
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
         </div>
       </div>
 
-      {selectedVehicle && (
-        <div className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm">
-          <div className="relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
-            <button 
-              className="absolute text-xl text-red-500 top-2 right-2 hover:text-red-700" 
-              onClick={() => setSelectedVehicle(null)}
-            >
-              ✕
-            </button>
-            <img src={selectedVehicle.image} alt={selectedVehicle.name} className="object-cover w-full h-40 rounded" />
-            <h3 className="mt-4 text-2xl font-bold">{selectedVehicle.name}</h3>
-            <p className="text-gray-600">Type: {selectedVehicle.type}</p>
-            <p className="text-gray-600">Seats: {selectedVehicle.seats}</p>
-            <p className="mt-2 font-bold text-blue-600">₹{selectedVehicle.price} / day</p>
-
-            <div className="flex items-center justify-center gap-4 mt-4">
-              <button
-                className="px-6 py-2 text-white bg-gray-500 rounded-lg hover:bg-gray-600"
+      {/* Modal for Selected Vehicle */}
+      <AnimatePresence>
+        {selectedVehicle && (
+          <motion.div
+            initial={{ opacity: 0, scale: 0.2 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 0.2 }}
+            transition={{ duration: 0.1 }}
+            className="fixed inset-0 flex items-center justify-center p-4 bg-black bg-opacity-50 backdrop-blur-sm"
+          >
+            <div className="relative w-full max-w-md p-6 bg-white rounded-lg shadow-lg">
+              <button 
+                className="absolute text-xl text-red-500 top-2 right-2 hover:text-red-700" 
                 onClick={() => setSelectedVehicle(null)}
               >
-                Close
+                ✕
               </button>
-              <Link to={`/booking?vehicleId=${selectedVehicle.id}`}>
-                <button className="px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
-                  <Link to='/pay'>Book Now</Link>
+              <img src={selectedVehicle.image} alt={selectedVehicle.name} className="object-cover w-full h-40 rounded" />
+              <h3 className="mt-4 text-2xl font-bold">{selectedVehicle.name}</h3>
+              <p className="text-gray-600">Type: {selectedVehicle.type}</p>
+              <p className="text-gray-600">Seats: {selectedVehicle.seats}</p>
+              <p className="mt-2 font-bold text-blue-600">₹{selectedVehicle.price} / day</p>
+
+              <div className="flex items-center justify-center gap-4 mt-4">
+                <button
+                  className="px-6 py-2 text-white bg-gray-500 rounded-lg hover:bg-gray-600"
+                  onClick={() => setSelectedVehicle(null)}
+                >
+                  Close
                 </button>
-              </Link>
-              <Link to="/chat">
-                <button className="px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
-                  Chat
-                </button>
-              </Link>
+                <Link to='/pay'>
+                  <button className="px-6 py-2 text-white bg-green-500 rounded-lg hover:bg-green-600">
+                    Book Now
+                  </button>
+                </Link>
+                <Link to="/chat">
+                  <button className="px-6 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600">
+                    Chat
+                  </button>
+                </Link>
+              </div>
             </div>
-          </div>
-        </div>
-      )}
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <Footer />
     </>
