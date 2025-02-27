@@ -102,6 +102,30 @@ function AgProvide() {
         </motion.div>
       </div>
 
+      {/* Additional Section */}
+      <motion.section
+        initial={{ opacity: 0, scale: 0.9 }}
+        animate={{ opacity: 1, scale: 1 }}
+        transition={{ duration: 0.8, ease: "easeOut" }}
+        className="relative flex flex-col items-center justify-center h-[50vh] text-white bg-no-repeat bg-cover"
+        style={{
+          backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQy6nvQYkaTrXJYg2IZA-x_nm-ulKRbIMNtndT2Z1C1AJyRPJVb5156l_wXxmuWGn-jjF8&usqp=CAU')",
+        }}
+      >
+        <div className="absolute inset-0 bg-black bg-opacity-50"></div>
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.3, duration: 0.8 }}
+          className="relative text-center"
+        >
+          <h1 className="text-4xl font-bold md:text-5xl">Expand Your Business Horizons</h1>
+          <p className="mt-4 text-lg md:text-xl">
+            Join us in transforming travel experiences with quality services.
+          </p>
+        </motion.div>
+      </motion.section>
+
       <AgFooter />
     </>
   );
