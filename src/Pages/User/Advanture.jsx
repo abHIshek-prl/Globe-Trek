@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import Navbar from "../../Components/User-Components/Navbar";
 import Footer from "../../Components/User-Components/Footer";
+import { Link } from "react-router-dom";
 
 function Advanture() {
     const [selectedAdventure, setSelectedAdventure] = useState(null);
@@ -102,84 +102,59 @@ function Advanture() {
         },
     ];
 
-    const filteredAdventures =
-        filter === "All" ? adventures : adventures.filter((adventure) => adventure.difficulty === filter);
+    const filteredAdventures = filter === "All" ? adventures : adventures.filter((adventure) => adventure.difficulty === filter);
 
     return (
         <div>
             <Navbar />
-
-            {/* Hero Section */}
-            <section
-                className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
-                style={{
-                    backgroundImage:
-                        "url('https://himalayaguidenepal.com/wp-content/uploads/2023/12/Tourism-activities-in-nepal.jpg')",
-                }}
-            >
+            <section className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover" style={{ backgroundImage: "url('https://himalayaguidenepal.com/wp-content/uploads/2023/12/Tourism-activities-in-nepal.jpg')" }}>
                 <div className="absolute inset-0 bg-black bg-opacity-70"></div>
-                <motion.div 
-                    initial={{ opacity: 0, y: 50 }} 
-                    animate={{ opacity: 1, y: 0 }} 
-                    transition={{ duration: 1 }}
-                    className="relative z-10"
-                >
+                <motion.div initial={{ opacity: 0, y: 50 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 1 }} className="relative z-10">
                     <h1 className="text-4xl font-bold md:text-5xl">Thrilling Adventures Await You!</h1>
                     <p className="mt-4 text-lg md:text-xl">Choose your adventure and create unforgettable memories.</p>
                 </motion.div>
             </section>
 
-            {/* Filters */}
             <div className="flex justify-center gap-4 my-6">
                 {["All", "Easy", "Medium", "Hard"].map((level) => (
-                    <button
-                        key={level}
-                        className={`px-4 py-2 text-white rounded ${filter === level ? "bg-blue-600" : "bg-gray-500 hover:bg-gray-700"}`}
-                        onClick={() => setFilter(level)}
-                    >
+                    <button key={level} className={`px-4 py-2 text-white rounded ${filter === level ? "bg-blue-600" : "bg-gray-500 hover:bg-gray-700"}`} onClick={() => setFilter(level)}>
                         {level}
                     </button>
                 ))}
             </div>
 
-            {/* Adventure Cards with Animation */}
-            <motion.div 
-                className="min-h-screen p-6 bg-gray-100"
-                initial="hidden"
-                animate="visible"
-                variants={{
-                    hidden: { opacity: 0 },
-                    visible: {
-                        opacity: 1,
-                        transition: { staggerChildren: 0.2 }
-                    }
-                }}
-            >
+            <motion.div className="min-h-screen p-6 bg-gray-100" initial="hidden" animate="visible" variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.2 } } }}>
                 <div className="grid max-w-5xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 md:grid-cols-3">
                     {filteredAdventures.map((adventure) => (
-                        <motion.div 
-                            key={adventure.id} 
-                            className="overflow-hidden bg-white rounded-lg shadow-lg"
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.5 }}
-                        >
+                        <motion.div key={adventure.id} className="overflow-hidden bg-white rounded-lg shadow-lg" initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}>
                             <img src={adventure.image} alt={adventure.name} className="object-cover w-full h-48" />
                             <div className="p-4">
                                 <h3 className="text-xl font-bold">{adventure.name}</h3>
                                 <p className="text-gray-600">{adventure.location} | {adventure.difficulty} Level</p>
                                 <p className="font-semibold text-blue-600">${adventure.price}/person</p>
-                                <button
-                                    className="w-full px-4 py-2 mt-3 text-white bg-blue-500 rounded hover:bg-blue-600"
-                                    onClick={() => setSelectedAdventure(adventure)}
-                                >
-                                    View Details
-                                </button>
+                                <button className="w-full px-4 py-2 mt-3 text-white bg-blue-500 rounded hover:bg-blue-600" onClick={() => setSelectedAdventure(adventure)}>View Details</button>
                             </div>
                         </motion.div>
                     ))}
                 </div>
             </motion.div>
+
+            {selectedAdventure && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+                    <motion.div initial={{ scale: 0.8, opacity: 0 }} animate={{ scale: 1, opacity: 1 }} transition={{ duration: 0.3 }} className="max-w-md p-6 text-center bg-white rounded-lg shadow-lg">
+                        <h2 className="text-2xl font-bold">{selectedAdventure.name}</h2>
+                        <img src={selectedAdventure.image} alt={selectedAdventure.name} className="object-cover w-full h-48 mt-4 rounded" />
+                        <p className="mt-2 text-gray-600">Location: {selectedAdventure.location}</p>
+                        <p className="mt-1 text-gray-600">Difficulty: {selectedAdventure.difficulty}</p>
+                        <p className="mt-1 font-semibold text-blue-600">Price: ${selectedAdventure.price}/person</p>
+                        <div className="flex justify-around mt-4">
+                            <button className="px-4 py-2 text-white bg-gray-600 rounded hover:bg-gray-700" onClick={() => setSelectedAdventure(null)}>Close</button>
+                            <button className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600"><Link to='/pay'>Book Now</Link></button>
+                            <button className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"><Link to='/chat'>Chat</Link></button>
+                        </div>
+                    </motion.div>
+                </div>
+            )}
 
             <Footer />
         </div>

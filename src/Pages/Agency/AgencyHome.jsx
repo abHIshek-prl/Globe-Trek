@@ -36,7 +36,7 @@ function AgencyHome() {
             className="grid grid-cols-1 gap-6 px-4 md:grid-cols-2 lg:grid-cols-3"
           >
             {[
-              { title: "Add Package", description: "Create new travel packages" },
+              { title: "Add Package", description: "Create new travel packages"},
               { title: "Add Guide", description: "Register professional tour guides" },
               { title: "Add Resort", description: "List new resorts for travelers" },
             ].map((item, index) => (
