@@ -9,7 +9,7 @@ function Advanture() {
     const [filter, setFilter] = useState("All");
 
    const adventures = [
-        // India Adventures
+        
         {
             id: 1,
             name: "Trekking",
@@ -59,7 +59,7 @@ function Advanture() {
             image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQklnewlNMCDhMBvvxvnfkxL28_31O2WlM24A&s",
         },
 
-        // International Adventures
+        
         {
             id: 7,
             name: "Skydiving",

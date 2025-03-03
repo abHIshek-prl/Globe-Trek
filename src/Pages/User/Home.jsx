@@ -17,7 +17,7 @@ function Home() {
       <Navbar />
 
       <motion.div className="w-full">
-        {/* Hero Section */}
+        
         <motion.section
           initial={{ y: -30, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
@@ -40,7 +40,7 @@ function Home() {
           </motion.button>
         </motion.section>
 
-        {/* Services Section */}
+        
         <section className="px-4 py-10 bg-white">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
@@ -48,7 +48,7 @@ function Home() {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="grid max-w-6xl grid-cols-1 gap-6 mx-auto sm:grid-cols-2 md:grid-cols-3"
           >
-            {/* Resorts */}
+            
             <motion.button
               whileHover={{ scale: 1.05 }}
               className="p-6 transition bg-white shadow-xl rounded-xl hover:shadow-[#373737]"
@@ -62,7 +62,7 @@ function Home() {
               </Link>
             </motion.button>
 
-            {/* Packages */}
+           
             <motion.button
               whileHover={{ scale: 1.05 }}
               className="p-6 transition bg-white shadow-xl rounded-xl hover:shadow-[#373737]"
@@ -75,7 +75,7 @@ function Home() {
               </Link>
             </motion.button>
 
-            {/* Vehicle Rentals */}
+            
             <motion.button
               whileHover={{ scale: 1.05 }}
               className="p-6 transition bg-white shadow-xl rounded-xl hover:shadow-[#373737]"
@@ -100,7 +100,7 @@ function Home() {
           </div>
         </section>
 
-        {/* About Section */}
+        
         <motion.section
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}

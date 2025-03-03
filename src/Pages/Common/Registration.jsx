@@ -1,10 +1,21 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
-import Regstr from "../../assets/Commonimg/Reg.png";
 import { Link } from "react-router-dom";
+import Regstr from "../../assets/Commonimg/Reg.png";
 
 function Registration() {
     const [role, setRole] = useState("user");
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm();
+
+    const onSubmit = (data) => {
+        console.log("Form Data:", data);
+    };
 
     return (
         <motion.div
@@ -39,7 +50,8 @@ function Registration() {
                         Join us today!
                     </motion.p>
 
-                    <form>
+                    <form onSubmit={handleSubmit(onSubmit)}>
+                        
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -57,6 +69,7 @@ function Registration() {
                             </select>
                         </motion.div>
 
+                        
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -67,10 +80,15 @@ function Registration() {
                             <input
                                 type="text"
                                 placeholder="Enter your full name"
+                                {...register("fullName", { required: "Full Name is required" })}
                                 className="w-full px-3 py-2 mt-1 text-sm bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                             />
+                            {errors.fullName && (
+                                <p className="mt-1 text-sm text-red-400">{errors.fullName.message}</p>
+                            )}
                         </motion.div>
 
+                       
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -81,10 +99,21 @@ function Registration() {
                             <input
                                 type="email"
                                 placeholder="Enter your email"
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                        message: "Invalid email format",
+                                    },
+                                })}
                                 className="w-full px-3 py-2 mt-1 text-sm bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                             />
+                            {errors.email && (
+                                <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                            )}
                         </motion.div>
 
+                        
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
@@ -95,21 +124,31 @@ function Registration() {
                             <input
                                 type="password"
                                 placeholder="Enter your password"
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be at least 8 characters long",
+                                    },
+                                })}
                                 className="w-full px-3 py-2 mt-1 text-sm bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                             />
+                            {errors.password && (
+                                <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
+                            )}
                         </motion.div>
 
-                        <Link to='/home'>
-                            <motion.button
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                                type="submit"
-                                className="w-full py-2 mt-2 font-medium text-white bg-green-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-                            >
-                                Register
-                            </motion.button>
-                        </Link>
+                       
+                        <motion.button
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            type="submit"
+                            className="w-full py-2 mt-2 font-medium text-white bg-green-600 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                        >
+                           <Link to='/home'>Register</Link>
+                        </motion.button>
 
+                        
                         <motion.div
                             initial={{ opacity: 0 }}
                             animate={{ opacity: 1 }}

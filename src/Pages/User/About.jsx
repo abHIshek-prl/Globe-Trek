@@ -28,7 +28,7 @@ function About() {
   useEffect(() => {
     const handleScroll = () => {
       const scrollY = window.scrollY;
-      setIsVisible(scrollY > 300); // Show FAQ section when scrolled down
+      setIsVisible(scrollY > 300);
     };
 
     window.addEventListener('scroll', handleScroll);
@@ -39,7 +39,7 @@ function About() {
     <div className="bg-gray-100">
       <Navbar />
 
-      {/* About Section */}
+      
       <div className="flex items-center justify-center min-h-screen p-10">
         <motion.div 
           initial={{ opacity: 0, y: 50 }} 
@@ -47,7 +47,7 @@ function About() {
           transition={{ duration: 1 }} 
           className="flex flex-col items-center w-full max-w-5xl gap-8 p-6 bg-white shadow-lg sm:p-8 rounded-xl md:flex-row"
         >
-          {/* Text Section */}
+          
           <motion.div 
             initial={{ opacity: 0, x: -50 }} 
             animate={{ opacity: 1, x: 0 }} 
@@ -69,7 +69,7 @@ function About() {
             </p>
           </motion.div>
 
-          {/* Image Section */}
+          
           <motion.div 
             initial={{ opacity: 0, x: 50 }} 
             animate={{ opacity: 1, x: 0 }} 
@@ -85,7 +85,7 @@ function About() {
         </motion.div>
       </div>
 
-      {/* FAQs Section */}
+      
       <motion.div 
         initial={{ opacity: 0, y: 50 }} 
         animate={isVisible ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }} 
@@ -94,7 +94,7 @@ function About() {
       >
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Frequently Asked Questions</h2>
 
-        {/* Loop through FAQs */}
+        
         {faqs.map((faq, index) => (
           <motion.div 
             key={index} 

@@ -26,7 +26,7 @@ function Vehicle() {
     <>
       <Navbar />
 
-      {/* Hero Section */}
+      
       <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
@@ -41,7 +41,7 @@ function Vehicle() {
         </div>
       </motion.section>
 
-      {/* Vehicle Listings */}
+     
       <div className="min-h-screen p-6 bg-gray-100">
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Vehicle Rentals</h2>
 
@@ -50,10 +50,10 @@ function Vehicle() {
             <motion.div
               key={vehicle.id}
               className="overflow-hidden bg-white rounded-lg shadow-lg"
-              initial={{ opacity: 0, y: 30 }} // Start position
-              whileInView={{ opacity: 1, y: 0 }} // Animate when in view
-              transition={{ duration: 0.2, delay: index * 0.2 }} // Delay each card
-              viewport={{ once: true, amount: 0.2 }} // Ensures it runs only once
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }} 
+              transition={{ duration: 0.2, delay: index * 0.2 }}
+              viewport={{ once: true, amount: 0.2 }}
             >
               <img src={vehicle.image} alt={vehicle.name} className="object-cover w-full h-48" />
               <div className="p-4">
@@ -73,7 +73,7 @@ function Vehicle() {
         </div>
       </div>
 
-      {/* Modal for Selected Vehicle */}
+      
       <AnimatePresence>
         {selectedVehicle && (
           <motion.div

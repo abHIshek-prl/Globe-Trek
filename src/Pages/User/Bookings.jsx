@@ -6,7 +6,7 @@ function Bookings() {
   const [bookings, setBookings] = useState([]);
 
   useEffect(() => {
-    // Fetch bookings from API or local storage (Replace with actual API call)
+    
     const fetchedBookings = [
       { id: 1, type: "Destination", name: "Paris", date: "2025-03-15", status: "Confirmed" },
       { id: 2, type: "Vehicle", name: "SUV Rental", date: "2025-04-10", status: "Pending" },
@@ -24,7 +24,7 @@ function Bookings() {
       <div className="container px-4 py-6 mx-auto">
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">My Bookings</h2>
 
-        {/* Responsive Table Wrapper */}
+       
         <div className="overflow-x-auto">
           <table className="w-full overflow-hidden bg-white rounded-lg shadow-md min-w-max">
             <thead className="text-white bg-blue-600">

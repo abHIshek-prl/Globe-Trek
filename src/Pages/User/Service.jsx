@@ -11,7 +11,7 @@ function Service() {
       <div className="h-screen max-w-screen">
         <Navbar />
 
-        {/* Hero Section */}
+       
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
@@ -63,7 +63,7 @@ function Service() {
           </div>
         </motion.div>
 
-        {/* Travel Solutions Section */}
+        
         <div className="w-full min-h-screen p-8 bg-gray-100">
           <motion.h2
             initial={{ opacity: 0, y: 30 }}

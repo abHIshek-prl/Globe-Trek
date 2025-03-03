@@ -20,7 +20,7 @@ function AgProvide() {
     <>
       <AgNavbar />
 
-      {/* Hero Section */}
+      
       <motion.section
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
@@ -44,9 +44,9 @@ function AgProvide() {
         </motion.div>
       </motion.section>
 
-      {/* Provide Options Grid */}
+      
       <div className="container px-6 mx-auto my-12">
-        {/* First Row: 3 Items */}
+       
         <motion.div
           className="grid grid-cols-1 gap-6 px-4 md:grid-cols-2 lg:grid-cols-3"
           initial="hidden"
@@ -75,7 +75,7 @@ function AgProvide() {
           ))}
         </motion.div>
 
-        {/* Second Row: 2 Items Centered */}
+       
         <motion.div
           className="flex flex-wrap justify-center gap-6 mt-6"
           initial={{ opacity: 0, y: 20 }}
@@ -102,7 +102,7 @@ function AgProvide() {
         </motion.div>
       </div>
 
-      {/* Additional Section */}
+      
       <motion.section
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}

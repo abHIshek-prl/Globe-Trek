@@ -11,7 +11,7 @@ function Payment() {
       "Vehicle: SUV",
       "Resort: Beachfront Villa",
     ],
-    amount: "₹14,999", // Dynamically fetched from backend
+    amount: "₹14,999",
   });
 
   return (
@@ -26,7 +26,7 @@ function Payment() {
             Complete your booking securely
           </p>
 
-          {/* Form Fields */}
+          
           <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
             <input
               type="text"
@@ -45,7 +45,7 @@ function Payment() {
             />
           </div>
 
-          {/* Selected Items */}
+          
           <div className="p-3 mt-4 bg-gray-100 rounded-lg">
             <p className="text-sm text-gray-500">Selected Items</p>
             <div className="flex flex-wrap gap-2 text-sm font-semibold text-gray-700">
@@ -60,13 +60,13 @@ function Payment() {
             </div>
           </div>
 
-          {/* Amount */}
+      
           <div className="p-3 mt-4 bg-gray-100 rounded-lg">
             <p className="text-sm text-gray-500">Amount</p>
             <p className="text-xl font-bold text-blue-600">{formData.amount}</p>
           </div>
 
-          {/* Payment Button */}
+         
           <button className="w-full py-3 mt-6 text-white transition-all duration-300 bg-blue-600 rounded-lg shadow-md hover:bg-blue-700">
             Proceed to Pay
           </button>

@@ -11,20 +11,17 @@ function AgNavbar() {
     return (
         <nav className="relative z-50 bg-white shadow-md">
             <div className="container flex items-center justify-between px-6 py-4 mx-auto font-semibold">
-                
                 <Link to="/aghome" className="text-xl font-bold text-blue-600">
                     <img src="/src/assets/Commonimg/Logo.png" alt="Logo" className="h-10" />
                 </Link>
 
-                {/* Desktop Menu */}
                 <div className="items-center hidden space-x-8 md:flex">
                     <Link to="/aghome" className="text-gray-700 hover:text-blue-600">
                         Home
                     </Link>
 
-                    {/* PROVIDE DROPDOWN */}
-                    <div 
-                        className="relative z-50 group" 
+                    <div
+                        className="relative z-50 group"
                         onMouseEnter={() => setDropdownOpen(true)}
                         onMouseLeave={() => setDropdownOpen(false)}
                     >
@@ -37,11 +34,21 @@ function AgNavbar() {
 
                         {dropdownOpen && (
                             <div className="absolute left-0 z-50 w-48 mt-2 overflow-hidden bg-white border border-gray-200 rounded-md shadow-lg">
-                                <Link to="/agresort" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Add Resort</Link>
-                                <Link to="/agpackage" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Add Packages</Link>
-                                <Link to="/agvehicle" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Add Vehicles</Link>
-                                <Link to="/agguid" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Add Guides</Link>
-                                <Link to="/agactivity" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">Add Adventure</Link>
+                                <Link to="/agresort" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                                    Add Resort
+                                </Link>
+                                <Link to="/agpackage" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                                    Add Packages
+                                </Link>
+                                <Link to="/agvehicle" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                                    Add Vehicles
+                                </Link>
+                                <Link to="/agguid" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                                    Add Guides
+                                </Link>
+                                <Link to="/agactivity" className="block px-4 py-2 text-gray-700 hover:bg-blue-100">
+                                    Add Adventure
+                                </Link>
                             </div>
                         )}
                     </div>
@@ -55,18 +62,17 @@ function AgNavbar() {
                     </Link>
                 </div>
 
-                {/* Mobile Menu Button */}
                 <button className="text-gray-700 md:hidden" onClick={() => setMenuOpen(!menuOpen)}>
                     {menuOpen ? <XMarkIcon className="w-6 h-6" /> : <Bars3Icon className="w-6 h-6" />}
                 </button>
             </div>
 
-            {/* Mobile Menu */}
             {menuOpen && (
                 <div className="px-6 py-4 space-y-4 bg-white shadow-md md:hidden">
-                    <Link to="/aghome" className="block text-gray-700 hover:text-blue-600">Home</Link>
+                    <Link to="/aghome" className="block text-gray-700 hover:text-blue-600">
+                        Home
+                    </Link>
 
-                    {/* Provide */}
                     <button
                         onClick={() => navigate("/provide")}
                         className="block w-full text-left text-gray-700 hover:text-blue-600"
@@ -74,8 +80,12 @@ function AgNavbar() {
                         Provide
                     </button>
 
-                    <Link to="/agabout" className="block text-gray-700 hover:text-blue-600">About</Link>
-                    <Link to="/chat" className="block text-gray-700 hover:text-blue-600">Messages</Link>
+                    <Link to="/agabout" className="block text-gray-700 hover:text-blue-600">
+                        About
+                    </Link>
+                    <Link to="/chat" className="block text-gray-700 hover:text-blue-600">
+                        Messages
+                    </Link>
                 </div>
             )}
         </nav>

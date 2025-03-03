@@ -16,7 +16,7 @@ function Guide() {
     }, []);
 
     const guides = [
-        // 🌍 International Guides
+        
         {
             id: 1,
             name: "John Doe",
@@ -68,7 +68,7 @@ function Guide() {
             image: "https://img.freepik.com/premium-vector/male-avatar-icon-unknown-anonymous-person-default-avatar-profile-icon-social-media-user-business-man-man-profile-silhouette-isolated-white-background-vector-illustration_735449-122.jpg",
         },
     
-        // 🇮🇳 Indian Guides
+        
         {
             id: 6,
             name: "Ravi Sharma",
@@ -164,7 +164,7 @@ function Guide() {
         <>
             <Navbar />
 
-            {/* Hero Section with Animation */}
+            
             <motion.section
                 className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
                 style={{ backgroundImage: `url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSJgiv8vHgbbH3jamqV3sxm20kvpR-4IATDMA&s)`, backgroundPosition: "center" }}
@@ -193,7 +193,7 @@ function Guide() {
                 </div>
             </motion.section>
 
-            {/* Guide Cards Section */}
+            
             <div className="min-h-screen p-6 bg-gray-100">
                 <motion.h2
                     className="mb-6 text-3xl font-bold text-center text-blue-600"
@@ -230,7 +230,7 @@ function Guide() {
                 </motion.div>
             </div>
 
-            {/* Modal with Animation */}
+           
             {selectedGuide && (
                 <motion.div
                     className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"

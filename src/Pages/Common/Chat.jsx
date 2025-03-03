@@ -33,7 +33,7 @@ function Chat() {
   const handleUserClick = (user) => {
     setSelectedUser(user);
     setMessages(initialMessages[user.id] || []);
-    setIsSidebarOpen(false); // Close sidebar on mobile when a user is selected
+    setIsSidebarOpen(false); 
   };
 
   const sendMessage = () => {
@@ -46,7 +46,7 @@ function Chat() {
     <div className="flex flex-col h-screen">
       <div className="flex flex-1 bg-gray-100">
         
-        {/* Sidebar (Users List) */}
+       
         <div className={`fixed inset-y-0 left-0 z-50 w-3/4 bg-white border-r transition-transform transform ${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} md:translate-x-0 md:relative md:w-1/4`}>
           <div className="flex items-center justify-between p-4 bg-gray-200">
             <h2 className="text-lg font-semibold">Chats</h2>
@@ -74,10 +74,10 @@ function Chat() {
           </div>
         </div>
 
-        {/* Chat Window */}
+        
         <div className="flex flex-col w-full md:w-3/4">
           
-          {/* Top Bar with Back & Sidebar Toggle Button */}
+          
           <div className="flex items-center justify-between p-4 bg-white border-b shadow-md">
             <div className="flex items-center gap-3">
               <button onClick={() => navigate(-1)} className="p-2 text-gray-600 hover:text-blue-500">
@@ -94,7 +94,7 @@ function Chat() {
             </div>
           </div>
 
-          {/* Messages */}
+          
           <div className="flex-1 p-4 space-y-4 overflow-y-auto bg-gray-50">
             {messages.map((msg, index) => (
               <div key={index} className={`flex ${msg.sender === "me" ? "justify-end" : "justify-start"}`}>
@@ -105,7 +105,7 @@ function Chat() {
             ))}
           </div>
 
-          {/* Message Input */}
+          
           <div className="flex items-center gap-2 p-4 bg-white border-t">
             <input
               type="text"

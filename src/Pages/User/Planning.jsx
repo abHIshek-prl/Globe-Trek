@@ -35,7 +35,7 @@ function Planning() {
     <>
       <Navbar />
 
-      {/* Hero Section */}
+     
       <section
         className="relative px-6 py-16 text-center text-white bg-no-repeat bg-cover"
         style={{ backgroundImage: `url(${Pln})` }}
@@ -54,12 +54,12 @@ function Planning() {
         </div>
       </section>
 
-      {/* Planning Section */}
+     
       <div className="min-h-screen p-6 bg-[#efeeee]">
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Plan Your Trip</h2>
 
         <div className="max-w-3xl p-6 mx-auto bg-white rounded-lg shadow-md">
-          {/* Budget & Members */}
+         
           <div className="grid grid-cols-2 gap-4 mb-4">
             <input
               type="number"
@@ -79,7 +79,7 @@ function Planning() {
             />
           </div>
 
-          {/* Preferred Places */}
+         
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Select or Enter Destination</label>
             <div className="relative">
@@ -115,7 +115,7 @@ function Planning() {
             </div>
           </div>
 
-          {/* Duration */}
+         
           <div className="mb-4">
             <label className="block mb-2 font-semibold">Trip Duration</label>
             <select
@@ -130,7 +130,7 @@ function Planning() {
             </select>
           </div>
 
-          {/* Search Button */}
+         
           <button
             onClick={handleSearch}
             className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700"
@@ -139,7 +139,7 @@ function Planning() {
           </button>
         </div>
 
-        {/* Recommended Packages */}
+        
         {recommendedPackages.length > 0 && (
           <div className="max-w-3xl mx-auto mt-6">
             <h3 className="mb-4 text-xl font-semibold text-center">Recommended Packages</h3>
@@ -165,7 +165,7 @@ function Planning() {
           </div>
         )}
 
-        {/* Package Details Modal */}
+        
         {selectedPackage && (
           <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
             <div className="max-w-md p-6 bg-white rounded-lg shadow-lg">
@@ -183,7 +183,7 @@ function Planning() {
                 <button className="px-4 py-2 text-white bg-green-500 rounded hover:bg-green-600">
                   <Link to='/pay'>Book Now</Link>
                 </button>
-                {/* Chat Button */}
+                
                 <Link to="/chat">
                   <button className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">
                     Chat

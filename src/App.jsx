@@ -35,6 +35,5 @@ export default App
 
 
 
-// register -> home
-// login -> home
-// home -> start planning -> payment
+// register -> user home
+// login -> agency home

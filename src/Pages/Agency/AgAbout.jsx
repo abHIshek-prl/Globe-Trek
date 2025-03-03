@@ -60,13 +60,13 @@ function AgAbout() {
     return (
         <>
             <div className="bg-gray-100">
-                {/* Navbar */}
+               
                 <AgNavbar />
 
-                {/* Hero Section */}
+               
                 <section className="container px-6 py-12 mx-auto">
                     <div className="flex flex-col items-center p-8 bg-white rounded-lg shadow-lg md:flex-row">
-                        {/* Left Content */}
+                        
                         <motion.div
                             initial={{ opacity: 0, x: -50 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -82,7 +82,7 @@ function AgAbout() {
                             <p className="mt-4 text-gray-600">Join today and showcase your services to a wider audience!</p>
                         </motion.div>
 
-                        {/* Right Image Section */}
+                        
                         <motion.div
                             initial={{ opacity: 0, x: 50 }}
                             animate={{ opacity: 1, x: 0 }}
@@ -98,7 +98,7 @@ function AgAbout() {
                     </div>
                 </section>
 
-                {/* FAQ Section */}
+                
                 <section className="container px-6 py-12 mx-auto">
                     <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Frequently Asked Questions</h2>
 
