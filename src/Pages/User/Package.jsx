@@ -16,6 +16,7 @@ function Packages() {
       duration: "5 Days",
       description: "Explore the rich heritage of India, including the Taj Mahal, Jaipur forts, and Delhi's landmarks.",
       image: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQToSN3Abj0slZ5a8mfIMWYAxvFf3U__vjbsQ&s",
+    
     },
     {
       id: 2,
@@ -119,7 +120,7 @@ function Packages() {
         </div>
       </motion.section>
 
-      <div className="min-h-screen p-6 bg-gray-100">
+      <div className="min-h-screen p-6 bg-[#ffffff]">
         <h2 className="mb-6 text-3xl font-bold text-center text-blue-600">Popular Travel Packages</h2>
 
         <motion.div

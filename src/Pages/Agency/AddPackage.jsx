@@ -1,63 +1,39 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import AgNavbar from "../../Components/Agncy-Components/AgNavbar";
 import AgFooter from "../../Components/Agncy-Components/AgFooter";
 
 function AddPackage() {
-  const [packageData, setPackageData] = useState({
-    title: "",
-    destination: "",
-    description: "",
-    price: "",
-    duration: "",
-    image: null,
-    imagePreview: "",
-  });
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    reset,
+  } = useForm();
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setPackageData({ ...packageData, [name]: value });
-  };
+  const [imagePreview, setImagePreview] = useState("");
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setPackageData({
-          ...packageData,
-          image: file,
-          imagePreview: reader.result,
-        });
+        setImagePreview(reader.result);
       };
       reader.readAsDataURL(file);
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!packageData.title || !packageData.destination || !packageData.description || !packageData.price || !packageData.duration) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    console.log("Package Data:", packageData);
+  const onSubmit = (data) => {
+    console.log("Package Data:", data);
     alert("Package added successfully!");
-
-    setPackageData({
-      title: "",
-      destination: "",
-      description: "",
-      price: "",
-      duration: "",
-      image: null,
-      imagePreview: "",
-    });
+    reset();
+    setImagePreview("");
   };
 
   return (
-    <><div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <AgNavbar />
 
       <motion.div
@@ -81,41 +57,77 @@ function AddPackage() {
         className="max-w-3xl p-8 mx-auto mt-8 bg-white rounded-lg shadow-md"
       >
         <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Add a New Travel Package</h2>
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <div>
             <label className="block font-semibold text-gray-700">Package Title</label>
-            <input type="text" name="title" value={packageData.title} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter package title" required />
+            <input
+              type="text"
+              {...register("title", { required: "Package title is required" })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter package title"
+            />
+            {errors.title && <p className="text-sm text-red-500">{errors.title.message}</p>}
           </div>
 
           <div>
             <label className="block font-semibold text-gray-700">Package Destination</label>
-            <input type="text" name="destination" value={packageData.destination} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter destination" required />
+            <input
+              type="text"
+              {...register("destination", { required: "Destination is required" })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter destination"
+            />
+            {errors.destination && <p className="text-sm text-red-500">{errors.destination.message}</p>}
           </div>
 
           <div>
             <label className="block font-semibold text-gray-700">Description</label>
-            <textarea name="description" value={packageData.description} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter package details" rows="4" required></textarea>
+            <textarea
+              {...register("description", { required: "Description is required" })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter package details"
+              rows="4"
+            ></textarea>
+            {errors.description && <p className="text-sm text-red-500">{errors.description.message}</p>}
           </div>
 
           <div>
             <label className="block font-semibold text-gray-700">Price (₹)</label>
-            <input type="number" name="price" value={packageData.price} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter price" required />
+            <input
+              type="number"
+              {...register("price", {
+                required: "Price is required",
+                min: { value: 1, message: "Price must be greater than ₹0" },
+              })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter price"
+            />
+            {errors.price && <p className="text-sm text-red-500">{errors.price.message}</p>}
           </div>
 
           <div>
             <label className="block font-semibold text-gray-700">Duration (Days)</label>
-            <input type="number" name="duration" value={packageData.duration} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter duration" required />
+            <input
+              type="number"
+              {...register("duration", {
+                required: "Duration is required",
+                min: { value: 1, message: "Duration must be at least 1 day" },
+              })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter duration"
+            />
+            {errors.duration && <p className="text-sm text-red-500">{errors.duration.message}</p>}
           </div>
 
           <div>
             <label className="block font-semibold text-gray-700">Upload Image</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full p-2 border rounded-lg" />
-            {packageData.imagePreview && (
+            <input type="file" accept="image/*" {...register("image")} onChange={handleImageChange} className="w-full p-2 border rounded-lg" />
+            {imagePreview && (
               <motion.img
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                src={packageData.imagePreview}
+                src={imagePreview}
                 alt="Preview"
                 className="object-cover w-full h-48 mt-3 rounded-lg"
               />
@@ -132,7 +144,8 @@ function AddPackage() {
           </motion.button>
         </form>
       </motion.div>
-    </div><AgFooter /></>
+      <AgFooter />
+    </div>
   );
 }
 

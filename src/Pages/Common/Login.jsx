@@ -1,9 +1,17 @@
 import React from 'react';
+import { useForm } from "react-hook-form";
 import { motion } from 'framer-motion';
 import Log from '../../assets/Commonimg/Log.png';
 import { Link } from 'react-router-dom';
 
 function Login() {
+  
+  const {
+          register,
+          handleSubmit,
+          formState: { errors },
+      } = useForm();
+      
   return (
     <>
       <motion.div 
@@ -49,11 +57,21 @@ function Login() {
               className="mb-3"
             >
               <label className="block text-base font-medium text-white">Email Address</label>
-              <input
-                type="email"
-                placeholder="Enter your email"
-                className="w-full px-3 py-2 mt-1 text-sm bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
+                            <input
+                                type="email"
+                                placeholder="Enter your email"
+                                {...register("email", {
+                                    required: "Email is required",
+                                    pattern: {
+                                        value: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,4}$/,
+                                        message: "Invalid email format",
+                                    },
+                                })}
+                                className="w-full px-3 py-2 mt-1 text-sm bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                            />
+                            {errors.email && (
+                                <p className="mt-1 text-sm text-red-400">{errors.email.message}</p>
+                            )}
             </motion.div>
 
             <motion.div 
@@ -63,11 +81,21 @@ function Login() {
               className="mb-3"
             >
               <label className="block text-base font-medium text-white">Password</label>
-              <input
-                type="password"
-                placeholder="Enter your password"
-                className="w-full px-3 py-2 mt-1 text-sm bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
-              />
+                            <input
+                                type="password"
+                                placeholder="Enter your password"
+                                {...register("password", {
+                                    required: "Password is required",
+                                    minLength: {
+                                        value: 8,
+                                        message: "Password must be at least 8 characters long",
+                                    },
+                                })}
+                                className="w-full px-3 py-2 mt-1 text-sm bg-gray-100 border rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                            />
+                            {errors.password && (
+                                <p className="mt-1 text-sm text-red-400">{errors.password.message}</p>
+                            )}
             </motion.div>
 
             <motion.button

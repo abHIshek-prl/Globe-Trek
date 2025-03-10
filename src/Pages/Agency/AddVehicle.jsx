@@ -1,21 +1,27 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import { motion } from "framer-motion";
 import AgNavbar from "../../Components/Agncy-Components/AgNavbar";
 import AgFooter from "../../Components/Agncy-Components/AgFooter";
 
 function AddVehicle() {
-  const [vehicleData, setVehicleData] = useState({
-    name: "",
-    type: "",
-    seatingCapacity: "",
-    price: "",
-    image: null,
-    imagePreview: "",
-  });
+  const [imagePreview, setImagePreview] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setVehicleData({ ...vehicleData, [name]: value });
+  const {
+    register,
+    handleSubmit,
+    setValue,
+    watch,
+    formState: { errors },
+    reset,
+  } = useForm();
+
+  const onSubmit = (data) => {
+    console.log("Vehicle Data:", data);
+    alert("Vehicle added successfully!");
+
+    reset();
+    setImagePreview("");
   };
 
   const handleImageChange = (e) => {
@@ -23,35 +29,11 @@ function AddVehicle() {
     if (file) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        setVehicleData({
-          ...vehicleData,
-          image: file,
-          imagePreview: reader.result,
-        });
+        setImagePreview(reader.result);
+        setValue("image", file);
       };
       reader.readAsDataURL(file);
     }
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (!vehicleData.name || !vehicleData.type || !vehicleData.seatingCapacity || !vehicleData.price) {
-      alert("Please fill in all fields.");
-      return;
-    }
-
-    console.log("Vehicle Data:", vehicleData);
-    alert("Vehicle added successfully!");
-
-    setVehicleData({
-      name: "",
-      type: "",
-      seatingCapacity: "",
-      price: "",
-      image: null,
-      imagePreview: "",
-    });
   };
 
   return (
@@ -85,15 +67,24 @@ function AddVehicle() {
       >
         <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Add Vehicle Details</h2>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
           <motion.div whileHover={{ scale: 1.02 }}>
             <label className="block font-semibold text-gray-700">Vehicle Name</label>
-            <input type="text" name="name" value={vehicleData.name} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter vehicle name" required />
+            <input
+              type="text"
+              {...register("name", { required: "Vehicle name is required" })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter vehicle name"
+            />
+            {errors.name && <p className="text-sm text-red-600">{errors.name.message}</p>}
           </motion.div>
 
           <motion.div whileHover={{ scale: 1.02 }}>
             <label className="block font-semibold text-gray-700">Vehicle Type</label>
-            <select name="type" value={vehicleData.type} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" required>
+            <select
+              {...register("type", { required: "Vehicle type is required" })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+            >
               <option value="">Select Type</option>
               <option value="Sedan">Sedan</option>
               <option value="SUV">SUV</option>
@@ -101,27 +92,58 @@ function AddVehicle() {
               <option value="Bus">Bus</option>
               <option value="Van">Van</option>
             </select>
+            {errors.type && <p className="text-sm text-red-600">{errors.type.message}</p>}
           </motion.div>
 
           <motion.div whileHover={{ scale: 1.02 }}>
             <label className="block font-semibold text-gray-700">Seating Capacity</label>
-            <input type="number" name="seatingCapacity" value={vehicleData.seatingCapacity} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter seating capacity" required />
+            <input
+              type="number"
+              {...register("seatingCapacity", { required: "Seating capacity is required", min: 1 })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter seating capacity"
+            />
+            {errors.seatingCapacity && <p className="text-sm text-red-600">{errors.seatingCapacity.message}</p>}
           </motion.div>
 
           <motion.div whileHover={{ scale: 1.02 }}>
             <label className="block font-semibold text-gray-700">Price (₹)</label>
-            <input type="number" name="price" value={vehicleData.price} onChange={handleChange} className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400" placeholder="Enter price" required />
+            <input
+              type="number"
+              {...register("price", { required: "Price is required", min: 1 })}
+              className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
+              placeholder="Enter price"
+            />
+            {errors.price && <p className="text-sm text-red-600">{errors.price.message}</p>}
           </motion.div>
 
           <motion.div whileHover={{ scale: 1.02 }}>
             <label className="block font-semibold text-gray-700">Upload Vehicle Image</label>
-            <input type="file" accept="image/*" onChange={handleImageChange} className="w-full p-2 border rounded-lg" />
-            {vehicleData.imagePreview && (
-              <motion.img src={vehicleData.imagePreview} alt="Preview" className="object-cover w-full h-48 mt-3 rounded-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} />
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleImageChange}
+              className="w-full p-2 border rounded-lg"
+            />
+            {imagePreview && (
+              <motion.img
+                src={imagePreview}
+                alt="Preview"
+                className="object-cover w-full h-48 mt-3 rounded-lg"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+              />
             )}
+            {errors.image && <p className="text-sm text-red-600">{errors.image.message}</p>}
           </motion.div>
 
-          <motion.button type="submit" className="w-full py-2 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700" whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+          <motion.button
+            type="submit"
+            className="w-full py-2 font-semibold text-white transition bg-blue-600 rounded-lg hover:bg-blue-700"
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
             Add Vehicle
           </motion.button>
         </form>

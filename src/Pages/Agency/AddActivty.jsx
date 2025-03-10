@@ -1,23 +1,24 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import AgNavbar from "../../Components/Agncy-Components/AgNavbar";
 import { motion } from "framer-motion";
 import AgFooter from "../../Components/Agncy-Components/AgFooter";
 
 function AddActivity() {
-    const [activityData, setActivityData] = useState({
-        name: "",
-        description: "",
-        location: "",
-        level: "Easy",
-        price: "",
-        otherDetails: "",
-        image: null,
-        imagePreview: "",
-    });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setActivityData({ ...activityData, [name]: value });
+    const [imagePreview, setImagePreview] = useState("");
+
+    const onSubmit = (data) => {
+        console.log("Activity Data:", data);
+        alert("Adventure Activity added successfully!");
+        reset();
+        setImagePreview("");
     };
 
     const handleImageChange = (e) => {
@@ -25,62 +26,32 @@ function AddActivity() {
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setActivityData({
-                    ...activityData,
-                    image: file,
-                    imagePreview: reader.result,
-                });
+                setImagePreview(reader.result);
             };
             reader.readAsDataURL(file);
         }
-    };
-
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (!activityData.name || !activityData.description || !activityData.location || !activityData.price) {
-            alert("Please fill in all required fields.");
-            return;
-        }
-
-        console.log("Activity Data:", activityData);
-        alert("Adventure Activity added successfully!");
-
-        setActivityData({
-            name: "",
-            description: "",
-            location: "",
-            level: "Easy",
-            price: "",
-            otherDetails: "",
-            image: null,
-            imagePreview: "",
-        });
     };
 
     return (
         <>
             <div className="min-h-screen bg-gray-100">
                 <AgNavbar />
-
-                <div
+                <motion.div
                     className="relative w-full h-[400px] bg-cover bg-center flex items-center justify-center"
                     style={{
                         backgroundImage:
                             "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR6MuPV7hQPaihh-eesdMA6ZLGEwsAl-qtnCQ&s')",
                     }}
+                    initial={{ opacity: 0, y: -50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 1 }}
                 >
                     <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-                    <motion.div
-                        className="relative z-10 px-4 text-center text-white"
-                        initial={{ opacity: 0, y: -50 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 1 }}
-                    >
+                    <motion.div className="relative z-10 px-4 text-center text-white">
                         <h1 className="text-4xl font-bold">Add an Adventure Activity</h1>
                         <p className="mt-2 text-lg">Create thrilling experiences for travelers</p>
                     </motion.div>
-                </div>
+                </motion.div>
 
                 <motion.div
                     className="max-w-3xl p-8 mx-auto mt-8 bg-white rounded-lg shadow-md"
@@ -90,52 +61,44 @@ function AddActivity() {
                 >
                     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Adventure Activity Details</h2>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div>
                             <label className="block font-semibold text-gray-700">Activity Name</label>
                             <input
                                 type="text"
-                                name="name"
-                                value={activityData.name}
-                                onChange={handleChange}
+                                {...register("name", { required: "Activity name is required" })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter activity name"
-                                required
                             />
+                            {errors.name && <p className="text-red-500">{errors.name.message}</p>}
                         </div>
 
                         <div>
                             <label className="block font-semibold text-gray-700">Description</label>
                             <textarea
-                                name="description"
-                                value={activityData.description}
-                                onChange={handleChange}
+                                {...register("description", { required: "Description is required" })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter activity details"
                                 rows="4"
-                                required
                             ></textarea>
+                            {errors.description && <p className="text-red-500">{errors.description.message}</p>}
                         </div>
 
                         <div>
                             <label className="block font-semibold text-gray-700">Location</label>
                             <input
                                 type="text"
-                                name="location"
-                                value={activityData.location}
-                                onChange={handleChange}
+                                {...register("location", { required: "Location is required" })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter activity location"
-                                required
                             />
+                            {errors.location && <p className="text-red-500">{errors.location.message}</p>}
                         </div>
 
                         <div>
                             <label className="block font-semibold text-gray-700">Difficulty Level</label>
                             <select
-                                name="level"
-                                value={activityData.level}
-                                onChange={handleChange}
+                                {...register("level")}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                             >
                                 <option value="Easy">Easy</option>
@@ -148,25 +111,11 @@ function AddActivity() {
                             <label className="block font-semibold text-gray-700">Price (₹)</label>
                             <input
                                 type="number"
-                                name="price"
-                                value={activityData.price}
-                                onChange={handleChange}
+                                {...register("price", { required: "Price is required", min: 100 })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter price"
-                                required
                             />
-                        </div>
-
-                        <div>
-                            <label className="block font-semibold text-gray-700">Other Details</label>
-                            <textarea
-                                name="otherDetails"
-                                value={activityData.otherDetails}
-                                onChange={handleChange}
-                                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
-                                placeholder="Enter additional details"
-                                rows="3"
-                            ></textarea>
+                            {errors.price && <p className="text-red-500">{errors.price.message}</p>}
                         </div>
 
                         <div>
@@ -174,12 +123,14 @@ function AddActivity() {
                             <input
                                 type="file"
                                 accept="image/*"
+                                {...register("image", { required: "Image is required" })}
                                 onChange={handleImageChange}
                                 className="w-full p-2 border rounded-lg"
                             />
-                            {activityData.imagePreview && (
+                            {errors.image && <p className="text-red-500">{errors.image.message}</p>}
+                            {imagePreview && (
                                 <motion.img
-                                    src={activityData.imagePreview}
+                                    src={imagePreview}
                                     alt="Preview"
                                     className="object-cover w-full h-48 mt-3 rounded-lg"
                                     initial={{ opacity: 0 }}

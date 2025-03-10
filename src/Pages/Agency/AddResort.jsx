@@ -1,65 +1,35 @@
 import React, { useState } from "react";
+import { useForm } from "react-hook-form";
 import AgNavbar from "../../Components/Agncy-Components/AgNavbar";
 import AgFooter from "../../Components/Agncy-Components/AgFooter";
 import { motion } from "framer-motion";
 
 function AddResort() {
-    const [resortData, setResortData] = useState({
-        name: "",
-        description: "",
-        price: "",
-        location: "",
-        facilities: "",
-        image: null,
-        imagePreview: "",
-    });
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+        reset,
+    } = useForm();
 
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setResortData({ ...resortData, [name]: value });
-    };
+    const [imagePreview, setImagePreview] = useState("");
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
         if (file) {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setResortData({
-                    ...resortData,
-                    image: file,
-                    imagePreview: reader.result,
-                });
+                setImagePreview(reader.result);
             };
             reader.readAsDataURL(file);
         }
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-
-        if (
-            !resortData.name ||
-            !resortData.description ||
-            !resortData.price ||
-            !resortData.location ||
-            !resortData.facilities
-        ) {
-            alert("Please fill in all fields.");
-            return;
-        }
-
-        console.log("Resort Data:", resortData);
+    const onSubmit = (data) => {
+        console.log("Resort Data:", data);
         alert("Resort added successfully!");
-
-        setResortData({
-            name: "",
-            description: "",
-            price: "",
-            location: "",
-            facilities: "",
-            image: null,
-            imagePreview: "",
-        });
+        reset();
+        setImagePreview("");
     };
 
     return (
@@ -69,24 +39,16 @@ function AddResort() {
 
                 <motion.div
                     className="relative w-full h-[400px] bg-cover bg-center flex items-center justify-center"
-                    style={{
-                        backgroundImage:
-                            "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX1RDyP9DPvpv-LCI1YV70RMprFR2LfhGfZQ&s')",
-                    }}
+                    style={{ backgroundImage: "url('https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX1RDyP9DPvpv-LCI1YV70RMprFR2LfhGfZQ&s')" }}
                     initial={{ opacity: 0, y: -50 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 1 }}
                 >
                     <div className="absolute inset-0 bg-black bg-opacity-50"></div>
-                    <motion.div
-                        className="relative z-10 px-4 text-center text-white"
-                        initial={{ opacity: 0, scale: 0.8 }}
-                        animate={{ opacity: 1, scale: 1 }}
-                        transition={{ duration: 1 }}
-                    >
+                    <div className="relative z-10 px-4 text-center text-white">
                         <h1 className="text-4xl font-bold">Add a New Resort</h1>
                         <p className="mt-2 text-lg">Offer travelers an unforgettable experience</p>
-                    </motion.div>
+                    </div>
                 </motion.div>
 
                 <motion.div
@@ -97,70 +59,60 @@ function AddResort() {
                 >
                     <h2 className="mb-6 text-2xl font-bold text-center text-gray-800">Resort Details</h2>
 
-                    <form onSubmit={handleSubmit} className="space-y-4">
+                    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                         <div>
                             <label className="block font-semibold text-gray-700">Resort Name</label>
                             <input
                                 type="text"
-                                name="name"
-                                value={resortData.name}
-                                onChange={handleChange}
+                                {...register("name", { required: "Name is required" })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter resort name"
-                                required
                             />
+                            {errors.name && <p className="text-red-500">{errors.name.message}</p>}
                         </div>
 
                         <div>
                             <label className="block font-semibold text-gray-700">Description</label>
                             <textarea
-                                name="description"
-                                value={resortData.description}
-                                onChange={handleChange}
+                                {...register("description", { required: "Description is required" })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter resort description"
                                 rows="4"
-                                required
                             ></textarea>
+                            {errors.description && <p className="text-red-500">{errors.description.message}</p>}
                         </div>
 
                         <div>
                             <label className="block font-semibold text-gray-700">Price per Night (₹)</label>
                             <input
                                 type="number"
-                                name="price"
-                                value={resortData.price}
-                                onChange={handleChange}
+                                {...register("price", { required: "Price is required", min: { value: 100, message: "Minimum price is ₹100" } })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter price per night"
-                                required
                             />
+                            {errors.price && <p className="text-red-500">{errors.price.message}</p>}
                         </div>
 
                         <div>
                             <label className="block font-semibold text-gray-700">Location</label>
                             <input
                                 type="text"
-                                name="location"
-                                value={resortData.location}
-                                onChange={handleChange}
+                                {...register("location", { required: "Location is required" })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter resort location"
-                                required
                             />
+                            {errors.location && <p className="text-red-500">{errors.location.message}</p>}
                         </div>
 
                         <div>
                             <label className="block font-semibold text-gray-700">Facilities</label>
                             <input
                                 type="text"
-                                name="facilities"
-                                value={resortData.facilities}
-                                onChange={handleChange}
+                                {...register("facilities", { required: "Facilities are required" })}
                                 className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-400"
                                 placeholder="Enter available facilities (WiFi, Pool, Spa, etc.)"
-                                required
                             />
+                            {errors.facilities && <p className="text-red-500">{errors.facilities.message}</p>}
                         </div>
 
                         <div>
@@ -171,16 +123,7 @@ function AddResort() {
                                 onChange={handleImageChange}
                                 className="w-full p-2 border rounded-lg"
                             />
-                            {resortData.imagePreview && (
-                                <motion.img
-                                    src={resortData.imagePreview}
-                                    alt="Preview"
-                                    className="object-cover w-full h-48 mt-3 rounded-lg"
-                                    initial={{ opacity: 0 }}
-                                    animate={{ opacity: 1 }}
-                                    transition={{ duration: 0.5 }}
-                                />
-                            )}
+                            {imagePreview && <motion.img src={imagePreview} alt="Preview" className="object-cover w-full h-48 mt-3 rounded-lg" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }} />}
                         </div>
 
                         <motion.button
